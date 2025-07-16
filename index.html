@@ -18,6 +18,7 @@ window.onerror = (message, source, lineno, colno, errorObj) => {
 		lineno,
 		colno,
 	}) : null;
+	
 
 	window.parent.postMessage({
 		type: 'horizons-runtime-error',
