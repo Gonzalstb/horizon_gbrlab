@@ -7,14 +7,13 @@ try {
     $email = 'admin@sistema.com';
     $name = 'Administrador';
     $password = 'admin123';
-    $hash = password_hash($password, PASSWORD_DEFAULT);
     $stmt = $db->prepare('SELECT id FROM users WHERE email = ?');
     $stmt->execute([$email]);
     if ($stmt->fetch()) {
         echo 'El usuario admin@sistema.com ya existe.';
     } else {
         $stmt = $db->prepare('INSERT INTO users (name, email, password) VALUES (?, ?, ?)');
-        $stmt->execute([$name, $email, $hash]);
+        $stmt->execute([$name, $email, $password]);
         echo 'Usuario admin@sistema.com creado con contraseña admin123.';
     }
 } catch (Exception $e) {

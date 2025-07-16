@@ -9,10 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$errors) {
         $db = new PDO('sqlite:users.db');
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $db->prepare('SELECT * FROM users WHERE email = ?');
-        $stmt->execute([$email]);
+        $stmt = $db->prepare('SELECT * FROM users WHERE email = ? AND password = ?');
+        $stmt->execute([$email, $password]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($user && password_verify($password, $user['password'])) {
+        if ($user) {
             $_SESSION['user'] = ['name' => $user['name'], 'email' => $user['email']];
             header('Location: index.html');
             exit;

@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors = [];
     if (!$name) $errors[] = 'El nombre es obligatorio.';
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = 'Correo inválido.';
-    if (strlen($password) < 6) $errors[] = 'La contraseña debe tener al menos 6 caracteres.';
+    if (strlen($password) < 3) $errors[] = 'La contraseña debe tener al menos 3 caracteres.';
     if (!$errors) {
         $db = new PDO('sqlite:users.db');
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -17,9 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->fetch()) {
             $errors[] = 'El correo ya está registrado.';
         } else {
-            $hash = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $db->prepare('INSERT INTO users (name, email, password) VALUES (?, ?, ?)');
-            $stmt->execute([$name, $email, $hash]);
+            $stmt->execute([$name, $email, $password]);
             $_SESSION['user'] = ['name' => $name, 'email' => $email];
             header('Location: index.html');
             exit;
