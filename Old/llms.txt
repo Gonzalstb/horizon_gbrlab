@@ -1,0 +1,3 @@
+## Pages
+- [Dashboard - Sistema de Tareas](/dashboard): Panel de control para gestión de tareas del equipo
+- [Iniciar Sesión - Sistema de Tareas](/login): Inicia sesión en el sistema de gestión de tareas
